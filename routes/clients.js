@@ -48,14 +48,15 @@ router.get('/clients/:id', async (req, res) => {
     res.json(client);
 })
 
-/*
+
 router.put('/clients/:id', async (req, res) => {
   const { name, description } = req.body;
-  await Client.findByIdAndUpdate(req.params.id, {title, description});
+  const client = await Client.findByIdAndUpdate(req.params.id, {name, description});
   
-  return "Cliente editado"
+  res.json(client);
 });
 
+/*
 router.delete('/notes/:id',  async (req, res) => {
   await Client.findByIdAndDelete(req.params.id);
   
