@@ -4,9 +4,16 @@ const router = express.Router();
 const Client = require('../models/Client')
 
 router.get('/clients', async (req, res) => {
-    const clients = await Client.find()
 
-    res.json(clients);
+    try {
+        const clients = await Client.find()
+        res.json(clients);
+
+    } catch (error) {
+        res.json({
+            error: error
+        });
+    }
 })
 
 router.post('/clients', async (req, res) => {
@@ -44,24 +51,45 @@ router.post('/clients', async (req, res) => {
 
 
 router.get('/clients/:id', async (req, res) => {
-    const client = await Client.findById(req.params.id)
-    res.json(client);
+
+    try {
+        const client = await Client.findById(req.params.id)
+        res.json(client);
+
+    } catch (error) {
+        res.json({
+            error: error
+        });
+    }
 })
 
 
 router.put('/clients/:id', async (req, res) => {
-  const { name, description } = req.body;
-  const client = await Client.findByIdAndUpdate(req.params.id, {name, description});
-  
-  res.json(client);
+    const { name, description } = req.body;
+
+    try {
+        const client = await Client.findByIdAndUpdate(req.params.id, { name, description });
+        res.json(client);
+
+    } catch (error) {
+        res.json({
+            error: error
+        });
+    }
 });
 
-/*
-router.delete('/notes/:id',  async (req, res) => {
-  await Client.findByIdAndDelete(req.params.id);
-  
-  return "Cliente Eliminado"
+router.delete('/clients/:id', async (req, res) => {
+    const id = req.params.id
+
+    try {
+        const client = await Client.findByIdAndRemove(id)
+        res.json(client)
+
+    } catch (error) {
+        res.json({
+            error: error
+        });
+    }
 });
-*/
 
 module.exports = router;
